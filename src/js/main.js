@@ -1,3 +1,8 @@
 import "./slider";
+import modals from './modules/modals';
 
-console.log('test')
+window.addEventListener('DOMContentLoaded', () => {
+    modals();
+
+
+})
