@@ -1,16 +1,12 @@
 import { messagesForm } from "../data/messages";
 import { postData } from "../services/services";
+import checkNumInputs from './checkNumInputs';
 
-const sendForms = () => {
+const sendForms = (state) => {
     const forms = document.querySelectorAll('form'),
-        inputs = document.querySelectorAll('input'),
-        phoneInputs = document.querySelectorAll('input[name="user_phone"]');
+        inputs = document.querySelectorAll('input');
 
-    phoneInputs.forEach(item => {
-        item.addEventListener('input', () => {
-            item.value = item.value.replace(/\D/, '');
-        });
-    });
+    checkNumInputs('input[name="user_phone"]')
 
     forms.forEach(form => {
         form.addEventListener('submit', e => {
@@ -23,6 +19,12 @@ const sendForms = () => {
             form.appendChild(statusMessage);
 
             const formData = new FormData(form);
+
+            if (form.getAttribute('data-calc') === 'end') {
+                for (let key in state) {
+                    formData.append(key, state[key])
+                }
+            }
 
 
             const clearInputs = () => {
